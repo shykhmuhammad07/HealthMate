@@ -1,5 +1,5 @@
 import cloudinary from "../config/Cloundinary.js";
-import Report from "../models/Report.js";
+import Report from "../Models/Report.js";
 import mongoose from "mongoose";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
