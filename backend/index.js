@@ -10,10 +10,12 @@ import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
+const API_URL = process.env.FRONTEND_URL;
 app.use(cookieParser());
 app.use(express.json());
 const allowedOrigins = [
-  "http://localhost:5173"
+  "http://localhost:5173",
+  API_URL
 ];
 
 app.use(
