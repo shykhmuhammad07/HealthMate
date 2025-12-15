@@ -11,6 +11,7 @@ import {
   FaShieldAlt,
   FaLock,
 } from "react-icons/fa";
+const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Upload = () => {
     const checkUser = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/user",
+          `${API_URL}/api/user`,
           {},
           { withCredentials: true }
         );
@@ -130,7 +131,7 @@ const Upload = () => {
         });
       }, 200);
 
-      await axios.post("http://localhost:5000/api/reports/upload", formData, {
+      await axios.post(`${API_URL}/api/reports/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
         onUploadProgress: (progressEvent) => {

@@ -19,13 +19,14 @@ const AiReport = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"; 
 
   // Check user
   useEffect(() => {
     const checkUser = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/user",
+          `${API_BASE_URL}/api/user`,
           {},
           { withCredentials: true }
         );
@@ -47,7 +48,7 @@ const AiReport = () => {
     const fetchReports = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:5000/api/reports/all`, {
+        const res = await axios.get(`${API_BASE_URL}/api/reports/all`, {
           withCredentials: true,
         });
 

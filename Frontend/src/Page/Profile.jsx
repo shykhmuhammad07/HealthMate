@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { FaShieldAlt } from "react-icons/fa"; // likely correct
 import { FaUpload } from "react-icons/fa";
+const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Profile = () => {
     const checkUser = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/user",
+          `${API_URL}/api/user`,
           {},
           { withCredentials: true }
         );
@@ -59,7 +60,7 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/api/auth/logout",
+        `${API_URL}/api/auth/logout`,
         {},
         { withCredentials: true }
       );

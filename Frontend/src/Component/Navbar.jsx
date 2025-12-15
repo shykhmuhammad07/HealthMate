@@ -20,11 +20,12 @@ const Navbar = () => {
   const location = useLocation();
   const [id, setId] = useState(false);
   const [loading, setLoading] = useState(true);
+  const Api_Url = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
   useEffect(() => {
     const checkUser = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/user",
+          `${Api_Url}/api/user`,
           {},
           { withCredentials: true }
         );
