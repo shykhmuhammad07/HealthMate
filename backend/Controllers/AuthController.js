@@ -21,7 +21,11 @@ export const signup = async (req, res) => {
       { expiresIn: "5d" }
     );
 
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("token", token, { 
+      httpOnly: true,
+      secure: true,
+      sameSite: "none"
+    });
     res.status(201).json({ message: "Signup successful", user, token });
   } catch (error) {
     res.status(500).json({ error: error.message });
