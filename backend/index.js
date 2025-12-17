@@ -33,13 +33,13 @@ app.use(
   })
 );
 
-// app.use((req, res, next) => {
-//   if (req.method === "OPTIONS") {
-//     res.sendStatus(200);
-//   } else {
-//     next();
-//   }
-// });
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 
 // Routes
 app.get("/", (req, res) => {
