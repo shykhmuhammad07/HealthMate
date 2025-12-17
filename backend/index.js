@@ -1,37 +1,29 @@
-// index.js
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import cookieParser from "cookie-parser";
-
-// Routes
 import ReportRoutes from "./Routes/ReportRoutes.js";
 import router from "./Routes/user.Route.js";
 import userAuthenticate from "./Routes/user.authenticate.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
+const API_URL = process.env.FRONTEND_URL;
 app.use(cookieParser());
 app.use(express.json());
 
-// Define allowed origins globally
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://health-mate-6brw.vercel.app",
-  "https://health-mate-psi.vercel.app",
-];
-
-// CORS configuration
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like Postman or server-to-server)
       if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        API_URL,
+      ];
+      if(allowedOrigins.includes(origin)){
         callback(null, true);
-      } else {
+      }else{
         callback(new Error("Not allowed by CORS"));
       }
     },
@@ -41,30 +33,36 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
 // Routes
 app.get("/", (req, res) => {
   res.send("HealthMate API is running...");
 });
-app.use("/api/auth", router);           // public auth routes
-app.use("/api", userAuthenticate);      // authentication middleware
-app.use("/api/reports", ReportRoutes);  // protected report routes
+app.use("/api/auth", router);
+app.use("/api", userAuthenticate);
+app.use("/api/reports", ReportRoutes);
 
-// MongoDB connection & server start
-const startServer = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URL);
-    console.log("MongoDB connected");
+try {
+  await mongoose.connect(process.env.MONGO_URL);
+  console.log("MongoDB connected");
+} catch (err) {
+  console.error("DB connection failed:", err.message);
+}
 
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`Server running on ${process.env.NODE_ENV === "production" ? "Vercel" : "http://localhost:" + PORT}`);
-    });
-  } catch (err) {
-    console.error("DB connection failed:", err.message);
-  }
-};
+console.log("after DB connection");
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () =>
+    console.log(`server running on http://localhost:${PORT}`)
+  );
+}
 
-startServer();
-
-// Export for Vercel deployment
+// Vercel deployment
 export default app;
