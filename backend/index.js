@@ -23,7 +23,7 @@ app.use(
       if (!origin) return callback(null, true); // server-to-server or Postman
       const allowedOrigins = [
         "http://localhost:5173",
-        "https://health-mate-6brw.vercel.app ",
+        "https://health-mate-6brw.vercel.app",
       ];
       if (allowedOrigins.includes(origin)) {
         callback(null, true);
