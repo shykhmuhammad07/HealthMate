@@ -37,8 +37,8 @@ app.use(
   })
 );
 
-// Optional: OPTIONS request handling
-app.options("*", cors()); // handle OPTIONS requests for all routes
+// // Optional: OPTIONS request handling
+// app.options("*", cors()); // handle OPTIONS requests for all routes
 
 // Routes
 app.get("/", (req, res) => {
