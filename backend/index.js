@@ -38,13 +38,7 @@ app.use(
 );
 
 // Optional: OPTIONS request handling
-app.use((req, res, next) => {
-  if (req.method === "OPTIONS") {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
+app.options("*", cors()); // handle OPTIONS requests for all routes
 
 // Routes
 app.get("/", (req, res) => {
