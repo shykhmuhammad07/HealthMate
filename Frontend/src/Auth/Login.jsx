@@ -11,9 +11,6 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const features = [
   {
@@ -41,7 +38,7 @@ const features = [
 const LoginPage = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
-  const API_URL = process.env.VITE_BACKEND_URL || "http://localhost:5000";
+  const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
