@@ -16,14 +16,14 @@ app.use(express.json());
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
+      if (!origin) return callback(null, true); // for Postman / server-to-server
       const allowedOrigins = [
         "http://localhost:5173",
         "https://health-mate-psi.vercel.app",
       ];
-      if(allowedOrigins.includes(origin)){
+      if (allowedOrigins.includes(origin)) {
         callback(null, true);
-      }else{
+      } else {
         callback(new Error("Not allowed by CORS"));
       }
     },
